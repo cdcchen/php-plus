@@ -69,15 +69,6 @@ function db()
 }
 
 /**
- * Returns the log dispatcher component.
- * @return \yii\log\Dispatcher the log dispatcher application component.
- */
-function log()
-{
-    return app()->getLog();
-}
-
-/**
  * Returns the cache component.
  * @return \yii\caching\Cache the cache application component. Null if the component is not enabled.
  */
@@ -196,5 +187,5 @@ function img($src, $options = [])
  */
 function a($text, $url = null, $options = [])
 {
-    return \yii\helpers\Html::img($text, $url, $options);
+    return \yii\helpers\Html::a($text, $url, $options);
 }
