@@ -1,0 +1,28 @@
+{
+    "name": "cdcchen/yii2plus",
+    "description": "yii2 plus",
+    "version": "1.0.0",
+    "keywords": ["yii2", "shortcut"],
+    "type": "yii2-extension",
+    "homepage": "https://github.com/cdcchen/yii2plus",
+    "time": "2014-08-18 02:52:01",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/cdcchen/yii2plus/issues",
+        "wiki": "https://github.com/cdcchen/yii2plus/wiki",
+        "source": "https://github.com/cdcchen/yii2plus"
+    },
+    "authors": [
+        {
+            "name": "Dong Chen",
+            "email": "cdcchen@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {"cdc\\yii2plus\\": ""}
+    }
+}
