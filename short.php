@@ -189,3 +189,9 @@ function a($text, $url = null, $options = [])
 {
     return \yii\helpers\Html::a($text, $url, $options);
 }
+
+
+function param($name)
+{
+    return isset(app()->params[$name]) ? app()->params[$name] : null;
+}
