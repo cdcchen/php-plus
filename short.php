@@ -191,7 +191,7 @@ function a($text, $url = null, $options = [])
 }
 
 
-function param($name)
+function param($name, $defaultValue = null)
 {
-    return isset(app()->params[$name]) ? app()->params[$name] : null;
+    return isset(app()->params[$name]) ? app()->params[$name] : $defaultValue;
 }
