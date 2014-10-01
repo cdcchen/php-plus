@@ -23,6 +23,8 @@
         "yiisoft/yii2": "*"
     },
     "autoload": {
-        "psr-4": {"yii2plus": ""}
+        "psr-4": {
+            "yii2plus\\": "framework/"
+        }
     }
 }
