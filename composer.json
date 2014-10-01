@@ -23,6 +23,6 @@
         "yiisoft/yii2": "*"
     },
     "autoload": {
-        "psr-4": {"cdc\\yii2plus\\": ""}
+        "psr-4": {"cdcchen\\yii2plus\\": ""}
     }
 }
