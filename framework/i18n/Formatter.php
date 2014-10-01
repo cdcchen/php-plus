@@ -6,7 +6,7 @@
  * Time: 下午1:23
  */
 
-namespace cdcchen\yii2plus\i18n;
+namespace yii2plus\i18n;
 
 
 class Formatter extends \yii\i18n\Formatter
