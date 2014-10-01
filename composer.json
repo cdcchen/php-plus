@@ -23,6 +23,9 @@
         "yiisoft/yii2": "*"
     },
     "autoload": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        },
         "psr-4": {
             "yii2plus\\": "framework/"
         }
