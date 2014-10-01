@@ -79,7 +79,7 @@ function cache()
 
 /**
  * Returns the formatter component.
- * @return \yii\base\Formatter the formatter application component.
+ * @return \yii\base\Formatter|common\base\Formatter the formatter application component.
  */
 function formatter()
 {
