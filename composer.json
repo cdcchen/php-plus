@@ -26,10 +26,5 @@
         "psr-4": {
             "yii2plus\\": "framework/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
     }
 }
