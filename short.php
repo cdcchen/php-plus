@@ -141,6 +141,11 @@ function security()
     return app()->getSecurity();
 }
 
+function t($category, $message, $params = [], $language = null)
+{
+    \Yii::t($category, $message, $params, $language);
+}
+
 /**
  * Encodes special characters into HTML entities.
  * The [[\yii\base\Application::charset|application charset]] will be used for encoding.
