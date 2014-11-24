@@ -66,11 +66,7 @@ function view()
  */
 function db($extra = null)
 {
-    if (empty($extra))
-        return app()->getDb();
-    else {
-        app()->get('db' . ucfirst($extra));
-    }
+    return (empty($extra)) ? app()->getDb() : app()->get('db' . ucfirst($extra));
 }
 
 /**
@@ -80,11 +76,7 @@ function db($extra = null)
  */
 function cache($extra = null)
 {
-    if (empty($extra))
-        return app()->getCache();
-    else {
-        app()->get('cache' . ucfirst($extra));
-    }
+    return (empty($extra)) ? app()->getCache() : app()->get('cache' . ucfirst($extra));
 }
 
 /**
@@ -103,11 +95,7 @@ function formatter()
  */
 function urlManager($extra = null)
 {
-    if (empty($extra))
-        return app()->getUrlManager();
-    else {
-        app()->get('urlManager' . ucfirst($extra));
-    }
+    return (empty($extra)) ? app()->getUrlManager() : app()->get('urlManager' . ucfirst($extra));
 }
 
 /**
@@ -126,11 +114,7 @@ function i18n()
  */
 function mailer($extra = null)
 {
-    if (empty($extra))
-        return app()->getMailer();
-    else {
-        app()->get('mailer' . ucfirst($extra));
-    }
+    return (empty($extra)) ? app()->getMailer() : app()->get('mailer' . ucfirst($extra));
 }
 
 /**
@@ -219,4 +203,25 @@ function a($text, $url = null, $options = [])
 function param($name, $defaultValue = null)
 {
     return isset(app()->params[$name]) ? app()->params[$name] : $defaultValue;
+}
+
+/**
+ * @param string|array $params use a string to represent a route (e.g. `site/index`),
+ * @param \yii\web\UrlManager $urlManager
+ * @return string
+ */
+function url($params, $urlManager = null)
+{
+    return empty($urlManager) ? urlManager()->createUrl($params) : $urlManager->createUrl($params);
+}
+
+/**
+ * @param string|array $params use a string to represent a route (e.g. `site/index`),
+ * @param string $scheme the scheme to use for the url (either `http` or `https`). If not specified
+ * @param \yii\web\UrlManager $urlManager
+ * @return string
+ */
+function aurl($params, $urlManager = null, $scheme = null)
+{
+    return empty($urlManager) ? urlManager()->createAbsoluteUrl($params, $scheme) : $urlManager->createAbsoluteUrl($params, $scheme);
 }
