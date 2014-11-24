@@ -11,7 +11,7 @@
  */
 function app()
 {
-    return Yii::$app;
+    return \Yii::$app;
 }
 
 /**
@@ -60,21 +60,31 @@ function view()
 }
 
 /**
+ * @param string $extra
  * Returns the database connection component.
  * @return \yii\db\Connection the database connection.
  */
-function db()
+function db($extra = null)
 {
-    return app()->getDb();
+    if (empty($extra))
+        return app()->getDb();
+    else {
+        app()->get('db' . ucfirst($extra));
+    }
 }
 
 /**
+ * @param string $extra
  * Returns the cache component.
  * @return \yii\caching\Cache the cache application component. Null if the component is not enabled.
  */
-function cache()
+function cache($extra = null)
 {
-    return app()->getCache();
+    if (empty($extra))
+        return app()->getCache();
+    else {
+        app()->get('cache' . ucfirst($extra));
+    }
 }
 
 /**
@@ -87,12 +97,17 @@ function formatter()
 }
 
 /**
+ * @param string $extra
  * Returns the URL manager for this application.
  * @return \yii\web\UrlManager the URL manager for this application.
  */
-function urlManager()
+function urlManager($extra = null)
 {
-    return app()->getUrlManager();
+    if (empty($extra))
+        return app()->getUrlManager();
+    else {
+        app()->get('urlManager' . ucfirst($extra));
+    }
 }
 
 /**
@@ -105,12 +120,17 @@ function i18n()
 }
 
 /**
+ * @param string $extra
  * Returns the mailer component.
  * @return \yii\mail\MailerInterface the mailer application component.
  */
-function mailer()
+function mailer($extra = null)
 {
-    return app()->getMailer();
+    if (empty($extra))
+        return app()->getMailer();
+    else {
+        app()->get('mailer' . ucfirst($extra));
+    }
 }
 
 /**
