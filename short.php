@@ -229,3 +229,25 @@ function aurl($params, $urlManager = null, $scheme = null)
         ? $urlManager->createAbsoluteUrl($params, $scheme)
         : urlManager($urlManager)->createAbsoluteUrl($params, $scheme);
 }
+
+/**
+ * @param string $key
+ * @param string $current
+ * @param array $managers
+ * @return array
+ */
+function buildUrlManager($key, $current, $managers)
+{
+    if (!isset($managers[$key]))
+        throw new InvalidArgumentException();
+    else
+        $manager = $managers[$key];
+
+    if ($key === $current) {
+        foreach ($manager['rules'] as $index => $rule) {
+            if (isset($rule['prefix']))
+                $managers[$key]['rules'][$index]['prefix'] = '';
+        }
+    }
+    return $managers[$key];
+}
