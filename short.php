@@ -207,12 +207,14 @@ function param($name, $defaultValue = null)
 
 /**
  * @param string|array $params use a string to represent a route (e.g. `site/index`),
- * @param \yii\web\UrlManager $urlManager
+ * @param string|\yii\web\UrlManager $urlManager
  * @return string
  */
 function url($params, $urlManager = null)
 {
-    return empty($urlManager) ? urlManager()->createUrl($params) : $urlManager->createUrl($params);
+    return ($urlManager instanceof \yii\web\UrlManager)
+        ? $urlManager->createUrl($params)
+        : urlManager($urlManager)->createUrl($params);
 }
 
 /**
@@ -223,5 +225,7 @@ function url($params, $urlManager = null)
  */
 function aurl($params, $urlManager = null, $scheme = null)
 {
-    return empty($urlManager) ? urlManager()->createAbsoluteUrl($params, $scheme) : $urlManager->createAbsoluteUrl($params, $scheme);
+    return ($urlManager instanceof \yii\web\UrlManager)
+        ? $urlManager->createAbsoluteUrl($params, $scheme)
+        : urlManager($urlManager)->createAbsoluteUrl($params, $scheme);
 }
