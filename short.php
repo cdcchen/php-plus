@@ -52,7 +52,7 @@ function user()
 
 /**
  * Returns the view object.
- * @return View|\yii\web\View the view application component that is used to render various view files.
+ * @return \yii\web\View the view application component that is used to render various view files.
  */
 function view()
 {
