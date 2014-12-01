@@ -1,7 +1,7 @@
 {
     "name": "cdcchen/yii2plus",
     "description": "yii2 plus",
-    "version": "0.1.5",
+    "version": "0.1.6.1",
     "keywords": ["yii2", "shortcut"],
     "type": "yii2-extension",
     "homepage": "https://github.com/cdcchen/yii2plus",
