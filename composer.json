@@ -25,9 +25,9 @@
     },
     "autoload": {
         "psr-4": {
-            "yiiplus\\": "yiiplus/",
-            "yiiext\\": "yiiext/",
-            "phplib\\": "phplib/"
+            "yiiplus\\": "src/yiiplus/",
+            "yiiext\\": "src/yiiext/",
+            "phplib\\": "src/phplib/"
         }
     },
     "extra": {
