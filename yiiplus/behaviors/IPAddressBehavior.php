@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2plus\behaviors;
+namespace yiiplus\behaviors;
 
 use yii\db\BaseActiveRecord;
 use yii\behaviors\AttributeBehavior;
@@ -52,6 +52,6 @@ class IPAddressBehavior extends AttributeBehavior
      */
     private static function getUserIP()
     {
-        return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+        return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
     }
 }

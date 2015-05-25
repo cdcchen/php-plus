@@ -6,7 +6,7 @@
  * Time: 下午1:23
  */
 
-namespace yii2plus\i18n;
+namespace yiiplus\i18n;
 
 
 class Formatter extends \yii\i18n\Formatter

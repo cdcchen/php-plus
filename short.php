@@ -43,7 +43,7 @@ function session()
 
 /**
  * Returns the user object.
- * @return \yii\web\User the application instance
+ * @return \yii\web\User | \yiiplus\web\User the application instance
  */
 function user()
 {
@@ -81,7 +81,7 @@ function cache($extra = null)
 
 /**
  * Returns the formatter component.
- * @return \yii\i18n\Formatter|\yii2plus\i18n\Formatter the formatter application component.
+ * @return \yii\i18n\Formatter|\yiiplus\i18n\Formatter the formatter application component.
  */
 function formatter()
 {
@@ -143,6 +143,15 @@ function assetManager()
 function security()
 {
     return app()->getSecurity();
+}
+
+/**
+ * Returns the userConfig component.
+ * @return \yiiplus\config\UserConfig the userConfig application component.
+ */
+function userConfig()
+{
+    return app()->get('userConfig');
 }
 
 function t($category, $message, $params = [], $language = null)
@@ -250,4 +259,26 @@ function buildUrlManager($key, $current, $managers)
         }
     }
     return $managers[$key];
+}
+
+/**
+ * @param $alias
+ * @param bool $throwException
+ * @return bool|string
+ */
+function alias($alias, $throwException = true)
+{
+    return \Yii::getAlias($alias, $throwException);
+}
+
+/**
+ * @param string $url
+ * @return string
+ */
+function staticUrl($url)
+{
+    if (stripos($url, 'http') === 0)
+        return $url;
+    else
+        return $url ? rtrim(alias('@static'), '/') . '/' . ltrim($url, '/') : '';
 }

@@ -1,8 +1,8 @@
 {
-    "name": "cdcchen/yii2plus",
-    "description": "yii2 plus",
+    "name": "cdcchen/php-plus",
+    "description": "php plus",
     "version": "0.1.6.1",
-    "keywords": ["yii2", "shortcut"],
+    "keywords": ["yii2", "shortcut", "phplib"],
     "type": "yii2-extension",
     "homepage": "https://github.com/cdcchen/yii2plus",
     "time": "2014-08-18 02:52:01",
@@ -25,12 +25,11 @@
     },
     "autoload": {
         "psr-4": {
-            "yii2plus\\": "framework/"
+            "yiiplus\\": "yiiplus/",
+            "yiiext\\": "yiiext/",
+            "phplib\\": "phplib/"
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "0.1.x-dev"
-        }
     }
 }
