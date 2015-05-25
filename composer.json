@@ -1,9 +1,9 @@
 {
     "name": "cdcchen/php-plus",
     "description": "php plus",
-    "version": "0.1.6.1",
-    "keywords": ["phplib"],
-    "type": "yii2-extension",
+    "version": "1.0.0",
+    "keywords": ["php plus"],
+    "type": "php-lib",
     "homepage": "https://github.com/cdcchen/php-plus",
     "time": "2014-08-18 02:52:01",
     "license": "BSD-3-Clause",
@@ -28,9 +28,8 @@
         }
     },
     "extra": {
-    },
-  "repositories": [
-    {"type": "composer", "url": "http://comproxy.cn/repo/packagist"},
-    {"packagist": false}
-  ]
+        "branch-alias": {
+          "dev-master": "1.0.x-dev"
+        }
+    }
 }
