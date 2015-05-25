@@ -227,10 +227,10 @@ class CUrl
 
     public function returnHeaders($flag = true)
     {
-        $this->setOption([
-            CURLOPT_HEADER => (bool)$flag,
-            CURLOPT_HEADERFUNCTION => [$this, '_get_headers'],
-        ]);
+        $this->setOption(CURLOPT_HEADER, (bool)$flag);
+        if ($flag)
+            $this->setOption(CURLOPT_HEADERFUNCTION, [$this, '_get_headers']);
+
         return $this;
     }
 
