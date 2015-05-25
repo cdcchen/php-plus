@@ -5,7 +5,7 @@
     "keywords": ["php plus"],
     "type": "php-lib",
     "homepage": "https://github.com/cdcchen/php-plus",
-    "time": "2014-08-18 02:52:01",
+    "time": "2015-05-25 17:45:01",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/cdcchen/php-plus/issues",
@@ -28,6 +28,10 @@
         }
     },
     "extra": {
+        "asset-installer-paths": {
+          "npm-asset-library": "vendor/npm",
+          "bower-asset-library": "vendor/bower"
+        },
         "branch-alias": {
           "dev-master": "1.0.x-dev"
         }
