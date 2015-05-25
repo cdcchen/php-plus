@@ -2,15 +2,15 @@
     "name": "cdcchen/php-plus",
     "description": "php plus",
     "version": "0.1.6.1",
-    "keywords": ["yii2", "shortcut", "phplib"],
+    "keywords": ["phplib"],
     "type": "yii2-extension",
-    "homepage": "https://github.com/cdcchen/yii2plus",
+    "homepage": "https://github.com/cdcchen/php-plus",
     "time": "2014-08-18 02:52:01",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/cdcchen/yii2plus/issues",
-        "wiki": "https://github.com/cdcchen/yii2plus/wiki",
-        "source": "https://github.com/cdcchen/yii2plus"
+        "issues": "https://github.com/cdcchen/php-plus/issues",
+        "wiki": "https://github.com/cdcchen/php-plus/wiki",
+        "source": "https://github.com/cdcchen/php-plus"
     },
     "authors": [
         {
@@ -20,16 +20,17 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": "*"
+        "php": ">=5.4.0"
     },
     "autoload": {
         "psr-4": {
-            "yiiplus\\": "src/yiiplus/",
-            "yiiext\\": "src/yiiext/",
-            "phplib\\": "src/phplib/"
+            "phpplus": "src/"
         }
     },
     "extra": {
-    }
+    },
+  "repositories": [
+    {"type": "composer", "url": "http://comproxy.cn/repo/packagist"},
+    {"packagist": false}
+  ]
 }
