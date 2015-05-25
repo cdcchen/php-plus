@@ -1,6 +1,6 @@
 <?php
 
-namespace phplib\image;
+namespace phpplus\image;
 
 class CDWaterMark
 {

@@ -6,7 +6,7 @@
  * Time: 下午5:58
  */
 
-namespace phplib\net;
+namespace phpplus\net;
 
 class CUrl
 {

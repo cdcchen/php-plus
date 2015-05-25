@@ -8,7 +8,7 @@
  * @site http://www.24beta.com/
  */
 
-namespace phplib\graphics;
+namespace phpplus\graphics;
 
 /**
  * Class SimpleGD

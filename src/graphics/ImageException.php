@@ -6,7 +6,7 @@
  * Time: 下午10:22
  */
 
-namespace phplib\graphics;
+namespace phpplus\graphics;
 
 
 class ImageException  extends \Exception

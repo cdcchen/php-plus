@@ -6,17 +6,17 @@
  * Time: 下午5:27
  */
 
-namespace phplib\graphics\filters;
+namespace phpplus\graphics\filters;
 
 
-use phplib\graphics\FilterBase;
-use phplib\graphics\ImageException;
-use phplib\graphics\SimpleImage;
+use phpplus\graphics\FilterBase;
+use phpplus\graphics\ImageException;
+use phpplus\graphics\SimpleImage;
 
 
 /**
  * Class StitchingFilter
- * @package phplib\graphics\filters
+ * @package phpplus\graphics\filters
  * @require php > 5.4
  */
 class StitchingFilter  extends FilterBase

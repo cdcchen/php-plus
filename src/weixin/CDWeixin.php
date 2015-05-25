@@ -1,6 +1,6 @@
 <?php
 
-namespace phplib\weixin;
+namespace phpplus\weixin;
 
 class CDWeixin
 {

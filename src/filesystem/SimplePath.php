@@ -6,7 +6,7 @@
  * Time: 上午11:35
  */
 
-namespace phplib\filesystem;
+namespace phpplus\filesystem;
 
 
 class SimplePath

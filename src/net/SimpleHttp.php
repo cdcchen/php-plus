@@ -6,7 +6,7 @@
  * Time: 下午4:01
  */
 
-namespace phplib\net;
+namespace phpplus\net;
 
 
 class SimpleHttp extends SimpleWrapper

@@ -9,7 +9,7 @@
  * @license BSD License
  */
 
-namespace phplib\graphics;
+namespace phpplus\graphics;
 
 /**
  * Class GIFCreator

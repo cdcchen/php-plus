@@ -6,7 +6,7 @@
  * Time: 下午10:17
  */
 
-namespace phplib\graphics;
+namespace phpplus\graphics;
 
 
 class FilterBase

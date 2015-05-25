@@ -6,11 +6,11 @@
  * Time: 下午10:19
  */
 
-namespace phplib\graphics\filters;
+namespace phpplus\graphics\filters;
 
 
-use phplib\graphics\FilterBase;
-use phplib\graphics\SimpleImage;
+use phpplus\graphics\FilterBase;
+use phpplus\graphics\SimpleImage;
 
 class OuterGlowTextFilter extends FilterBase
 {
