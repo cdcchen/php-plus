@@ -91,10 +91,8 @@ class CUrl
     public function getBody()
     {
         if ($this->_responseHeaders) {
-//            static $body = null;
-//            if ($body === null)
-                $body = explode("\r\n\r\n", $this->_data, 2);
-            return $body;
+            $body = explode("\r\n\r\n", $this->_data, 2);
+            return $body[1];
         }
         else
             return $this->_data;
@@ -227,9 +225,15 @@ class CUrl
 
     public function returnHeaders($flag = true)
     {
-        $this->setOption(CURLOPT_HEADER, (bool)$flag);
-        if ($flag)
-            $this->setOption(CURLOPT_HEADERFUNCTION, [$this, '_get_headers']);
+        $this->setOption([
+            CURLOPT_HEADER => (bool)$flag,
+        ]);
+
+        if ($flag) {
+            $this->setOption([
+                CURLOPT_HEADERFUNCTION => [$this, '_get_headers']
+            ]);
+        }
 
         return $this;
     }
