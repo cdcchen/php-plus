@@ -182,15 +182,14 @@ class CUrl
         if (is_resource($body)) {
             $length = (int)fstat($body)['size'];
             $options[CURLOPT_PUT] = true;
-            $options[CURLOPT_UPLOAD] = true;
             $options[CURLOPT_INFILE] = $body;
             $options[CURLOPT_INFILESIZE] = $length;
         }
         else {
             $data = is_array($body) ? http_build_query($body) : $body;
             $options[CURLOPT_POSTFIELDS] = $data;
-            $this->setHttpHeaders(['Content-Length' => strlen($data)]);
         }
+
         $this->setOption($options);
 
         return $this->execute($url);
