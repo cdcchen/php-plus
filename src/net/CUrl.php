@@ -188,8 +188,8 @@ class CUrl
         else {
             $data = is_array($body) ? http_build_query($body) : $body;
             $options[CURLOPT_POSTFIELDS] = $data;
+            $this->setHttpHeaders(['Content-Length' => strlen($data)]);
         }
-
         $this->setOption($options);
 
         return $this->execute($url);
