@@ -181,7 +181,6 @@ class CUrl
 
         if (is_resource($body)) {
             $length = (int)fstat($body)['size'];
-            $options[CURLOPT_PUT] = true;
             $options[CURLOPT_INFILE] = $body;
             $options[CURLOPT_INFILESIZE] = $length;
         }
