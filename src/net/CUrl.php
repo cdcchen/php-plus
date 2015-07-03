@@ -187,10 +187,12 @@ class CUrl
         }
         else {
             $data = is_array($body) ? http_build_query($body) : $body;
+            $length = strlen($data);
             $options[CURLOPT_POSTFIELDS] = $data;
         }
 
         $this->setOption($options);
+        $this->setHttpHeaders(['Content-Length' => $length]);
 
         return $this->execute($url);
     }
