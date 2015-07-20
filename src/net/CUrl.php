@@ -100,7 +100,26 @@ class CUrl
 
     public function getJsonData($assoc = true, $depth = 512, $options = 0)
     {
-        return json_decode($this->getBody(), $assoc, $depth, $options);
+        $data = json_decode($this->getBody(), $assoc, $depth, $options);
+
+        switch (json_last_error()) {
+            case JSON_ERROR_NONE:
+                break;
+            case JSON_ERROR_DEPTH:
+                throw new \InvalidArgumentException('The maximum stack depth has been exceeded.');
+            case JSON_ERROR_CTRL_CHAR:
+                throw new \InvalidArgumentException('Control character error, possibly incorrectly encoded.');
+            case JSON_ERROR_SYNTAX:
+                throw new \InvalidArgumentException('Syntax error.');
+            case JSON_ERROR_STATE_MISMATCH:
+                throw new \InvalidArgumentException('Invalid or malformed JSON.');
+            case JSON_ERROR_UTF8:
+                throw new \InvalidArgumentException('Malformed UTF-8 characters, possibly incorrectly encoded.');
+            default:
+                throw new \InvalidArgumentException('Unknown JSON decoding error.');
+        }
+
+        return $data;
     }
 
     public function getXmlData()
