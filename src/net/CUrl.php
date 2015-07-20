@@ -155,14 +155,16 @@ class CUrl
         return $this->execute($url);
     }
 
-    public function post($url, $data = null)
+    public function post($url, $data = null, $upload = false)
     {
-        $data = is_array($data) ? http_build_query($data) : $data;
+        $data = (is_array($data) && !$upload) ? http_build_query($data) : $data;
         $this->setOption([
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $data,
         ]);
-        $this->setHttpHeaders(['Content-Length' => strlen($data)]);
+
+        if (is_string($data))
+            $this->setHttpHeaders(['Content-Length' => strlen($data)]);
 
         return $this->execute($url);
     }
