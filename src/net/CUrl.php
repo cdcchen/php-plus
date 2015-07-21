@@ -8,6 +8,8 @@
 
 namespace phpplus\net;
 
+require_once __DIR__ . '/http_build_url.php';
+
 class CUrl
 {
     public static $defaultOptions = [
@@ -392,12 +394,8 @@ class CUrl
         parse_str($info['query'], $query);
         $query = http_build_query(array_merge($query, $params));
 
-        if (function_exists('http_build_url')) {
-            $info['query'] = $query;
-            $url = http_build_url($url, $info);
-        }
-        else
-            $url .= '?' . $query;
+        $info['query'] = $query;
+        $url = http_build_url($url, $info);
 
         return $url;
     }
