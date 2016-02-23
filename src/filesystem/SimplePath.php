@@ -78,9 +78,11 @@ class SimplePath
         return $basePath . $this->pathName . DIRECTORY_SEPARATOR . $this->fileName;
     }
 
-    public function getFileUrl()
+    public function getFileUrl($baseUrl = null)
     {
-        $pathUrl = ltrim(str_replace("\\", '/', $this->pathName), '/');
-        return $pathUrl . '/' . $this->fileName;
+        $baseUrl = $baseUrl ? rtrim($baseUrl, '/') . '/' : '';
+        $path = ltrim(str_replace("\\", '/', $this->pathName), '/') . '/';
+
+        return $baseUrl . $path . $this->fileName;
     }
 }
