@@ -32,7 +32,7 @@ class SimplePath
         return empty($key) ? $places : $places[$key];
     }
 
-    public function __construct($basePath = '', $baseUrl = '/')
+    public function __construct($basePath = '')
     {
         $this->basePath = $basePath;
     }
@@ -72,7 +72,7 @@ class SimplePath
         return $this;
     }
 
-    public function getFilePath()
+    public function getFilePath($basePath)
     {
         $basePath = (stripos($this->pathName, '/') === 0) ? '' : (rtrim($this->basePath, '/') . DIRECTORY_SEPARATOR);
         return $basePath . $this->pathName . DIRECTORY_SEPARATOR . $this->fileName;
