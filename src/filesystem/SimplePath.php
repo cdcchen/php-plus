@@ -72,7 +72,7 @@ class SimplePath
         return $this;
     }
 
-    public function getFilePath($basePath)
+    public function getFilePath()
     {
         $basePath = (stripos($this->pathName, '/') === 0) ? '' : (rtrim($this->basePath, '/') . DIRECTORY_SEPARATOR);
         return $basePath . $this->pathName . DIRECTORY_SEPARATOR . $this->fileName;
