@@ -26,7 +26,8 @@ class SimplePath
             '{second}' => date('s'),
             '{week}' => date('W'),
             '{wday}' => date('w'),
-            '{time}' => time(),
+            '{timestamp}' => time(),
+            '{uniqid}' => uniqid(),
         );
 
         return empty($key) ? $places : $places[$key];
