@@ -17,7 +17,7 @@ class SimplePath
 
     protected static function placeHolders($key = null)
     {
-        $places = array(
+        $places = [
             '{year}' => date('Y'),
             '{month}' => date('m'),
             '{day}' => date('d'),
@@ -28,7 +28,7 @@ class SimplePath
             '{wday}' => date('w'),
             '{timestamp}' => time(),
             '{uniqid}' => uniqid(),
-        );
+        ];
 
         return empty($key) ? $places : $places[$key];
     }
@@ -82,7 +82,8 @@ class SimplePath
     public function getFileUrl($baseUrl = null)
     {
         $baseUrl = $baseUrl ? rtrim($baseUrl, '/') . '/' : '';
-        $path = ltrim(str_replace("\\", '/', $this->pathName), '/') . '/';
+        $basePath = (stripos($this->pathName, '/') === 0) ? '' : (rtrim($this->basePath, '/') . DIRECTORY_SEPARATOR);
+        $path = ltrim(str_replace("\\", '/', $basePath . $this->pathName), '/') . '/';
 
         return $baseUrl . $path . $this->fileName;
     }
