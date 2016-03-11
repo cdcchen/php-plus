@@ -16,15 +16,15 @@ namespace phpplus\graphics;
  */
 class SimpleImage
 {
-    const POSITION_TOP_LEFT = 1;
-    const POSITION_TOP_CENTER = 2;
-    const POSITION_TOP_RIGHT = 3;
-    const POSITION_RIGHT_MIDDLE = 4;
-    const POSITION_BOTTOM_RIGHT = 5;
-    const POSITION_BOTTOM_CENTER = 6;
-    const POSITION_BOTTOM_LEFT = 7;
-    const POSITION_LEFT_MIDDLE = 8;
-    const POSITION_CENTER_MIDDLE = 9;
+    const POS_TOP_LEFT = 1;
+    const POS_TOP_CENTER = 2;
+    const POS_TOP_RIGHT = 3;
+    const POS_RIGHT_MIDDLE = 4;
+    const POS_BOTTOM_RIGHT = 5;
+    const POS_BOTTOM_CENTER = 6;
+    const POS_BOTTOM_LEFT = 7;
+    const POS_LEFT_MIDDLE = 8;
+    const POS_CENTER_MIDDLE = 9;
     
     const CANVAS_VERTICAL_TOP = 1;
     const CANVAS_VERTICAL_BOTH = 2;
@@ -34,6 +34,7 @@ class SimpleImage
     const CANVAS_HORIZONTAL_RIGHT = 6;
     
     public $version = '1.0';
+    public $fontPath;
 
     protected $_im;
     protected $_imageType = IMAGETYPE_PNG;
@@ -56,14 +57,12 @@ class SimpleImage
         IMAGETYPE_WEBP => 'imagewebp',
     ];
     
-    public $fontPath;
-
     public function __construct($im, $imageType = null)
     {
         if (is_resource($im))
             $this->setImageHandle($im);
         else
-            throw new ImageException('im is not valid image resource.');
+            throw new ImageException('$im is not valid image resource.');
 
         if ($imageType !== null)
             $this->setImageType($imageType);
@@ -500,12 +499,12 @@ class SimpleImage
         return $content;
     }
 
-    protected static function validateImageType($type, $throw = false)
+    public static function validateImageType($type, $throw = false)
     {
         if (imagetypes() & $type)
             return true;
         elseif ($throw)
-            throw new ImageException('not support this type');
+            throw new ImageException('Not support this type');
         else
             return false;
     }
@@ -585,7 +584,7 @@ class SimpleImage
      * @param integer $position
      * @return $this
      */
-    public function cropByPosition($width, $height, $position = self::POSITION_CENTER_MIDDLE)
+    public function cropByPosition($width, $height, $position = self::POS_CENTER_MIDDLE)
     {
         $pos = $this->getCropPosition($width, $height, $position);
 
@@ -609,34 +608,34 @@ class SimpleImage
 
         switch ($position)
         {
-            case self::POSITION_TOP_LEFT:
+            case self::POS_TOP_LEFT:
                 $dstX = $dstY = 0;
                 break;
-            case self::POSITION_TOP_CENTER:
+            case self::POS_TOP_CENTER:
                 $dstX = ($sourceWidth - $width) / 2;
                 $dstY = 0;
                 break;
-            case self::POSITION_TOP_RIGHT:
+            case self::POS_TOP_RIGHT:
                 $dstX = $sourceWidth - $width;
                 $dstY = 0;
                 break;
-            case self::POSITION_BOTTOM_LEFT:
+            case self::POS_BOTTOM_LEFT:
                 $dstX = 0;
                 $dstY = $sourceHeight - $height;
                 break;
-            case self::POSITION_BOTTOM_CENTER:
+            case self::POS_BOTTOM_CENTER:
                 $dstX = ($sourceWidth - $width) / 2;
                 $dstY = $sourceHeight - $height;
                 break;
-            case self::POSITION_BOTTOM_RIGHT:
+            case self::POS_BOTTOM_RIGHT:
                 $dstX = $sourceWidth - $width;
                 $dstY = $sourceHeight - $height;
                 break;
-            case self::POSITION_LEFT_MIDDLE:
+            case self::POS_LEFT_MIDDLE:
                 $dstX = 0;
                 $dstY = ($sourceHeight - $height) / 2;
                 break;
-            case self::POSITION_RIGHT_MIDDLE:
+            case self::POS_RIGHT_MIDDLE:
                 $dstX = $sourceWidth - $width;
                 $dstY = ($sourceHeight - $height) / 2;
                 break;
@@ -683,7 +682,7 @@ class SimpleImage
     public function rotate($degree = 90.0, $bgdColor, $ignoreTransparent = 0)
     {
         $degree = (int)$degree;
-        $this->_im = imagerotate($this->_im, $degree, 0, $bgdColor, $ignoreTransparent);
+        $this->_im = imagerotate($this->_im, $degree, $bgdColor, $ignoreTransparent);
         return $this;
     }
     
@@ -850,7 +849,7 @@ class SimpleImage
      * @throws ImageException
      * @return $this
      */
-    public function textByPosition($text, $font, $size, $position = self::POSITION_BOTTOM_RIGHT, $color = [0, 0, 0], $alpha = 0, $padding = 5, $angle = 0)
+    public function textByPosition($text, $font, $size, $position = self::POS_BOTTOM_RIGHT, $color = [0, 0, 0], $alpha = 0, $padding = 5, $angle = 0)
     {
         if (is_int($position))
             $pos = $this->getTextPosition($text, $font, $size, $position, $padding);
@@ -870,7 +869,7 @@ class SimpleImage
         return $this;
     }
     
-    public function getTextPosition($text, $font, $size, $position = self::POSITION_BOTTOM_RIGHT, $padding = 5, $angle = 0)
+    public function getTextPosition($text, $font, $size, $position = self::POS_BOTTOM_RIGHT, $padding = 5, $angle = 0)
     {
         if (is_array($position))
             return $position;
@@ -889,39 +888,39 @@ class SimpleImage
         $textHeight = $points[1] - $points[7];
         switch ($position)
         {
-            case self::POSITION_TOP_LEFT:
+            case self::POS_TOP_LEFT:
                 $x = $points[0] + $padding;
                 $y = $textHeight + $padding;
                 break;
-            case self::POSITION_TOP_CENTER:
+            case self::POS_TOP_CENTER:
                 $x = ($imWidth - $textWidth) / 2;
                 $y = $textHeight + $padding;
                 break;
-            case self::POSITION_TOP_RIGHT:
+            case self::POS_TOP_RIGHT:
                 $x = $imWidth - $textWidth - $padding;
                 $y = $textHeight + $padding;
                 break;
-            case self::POSITION_BOTTOM_LEFT:
+            case self::POS_BOTTOM_LEFT:
                 $x = $points[0] + $padding;
                 $y = $imHeight - $points[1] - $padding;
                 break;
-            case self::POSITION_BOTTOM_CENTER:
+            case self::POS_BOTTOM_CENTER:
                 $x = ($imWidth - $textWidth) / 2;
                 $y = $imHeight - $points[1] - $padding;
                 break;
-            case self::POSITION_RIGHT_MIDDLE:
+            case self::POS_RIGHT_MIDDLE:
                 $x = $imWidth - $textWidth - $padding;
                 $y = $imHeight/2 + $textHeight/2;
                 break;
-            case self::POSITION_LEFT_MIDDLE:
+            case self::POS_LEFT_MIDDLE:
                 $x = $points[0] + $padding;
                 $y = $imHeight/2 + $textHeight/2;
                 break;
-            case self::POSITION_CENTER_MIDDLE:
+            case self::POS_CENTER_MIDDLE:
                 $x = ($imWidth - $textWidth) / 2;
                 $y = $imHeight/2 + $textHeight/2;
                 break;
-            case self::POSITION_BOTTOM_RIGHT:
+            case self::POS_BOTTOM_RIGHT:
                 $x = $imWidth - $textWidth - $padding;
                 $y = $imHeight - $points[1] - $padding;
                 break;
@@ -941,7 +940,7 @@ class SimpleImage
      * @throws ImageException
      * @return $this
      */
-    public function merge($image, $position = self::POSITION_BOTTOM_RIGHT, $pct = 100)
+    public function merge($image, $position = self::POS_BOTTOM_RIGHT, $pct = 100)
     {
         if (is_resource($image))
             $src = $image;
@@ -1008,38 +1007,38 @@ class SimpleImage
         
         switch ($position)
         {
-            case self::POSITION_TOP_LEFT:
+            case self::POS_TOP_LEFT:
                 $x = $y = $padding;
                 break;
-            case self::POSITION_TOP_CENTER:
+            case self::POS_TOP_CENTER:
                 $x = ($dstW - $srcW) / 2;
                 $y =  $padding;
                 break;
-            case self::POSITION_TOP_RIGHT:
+            case self::POS_TOP_RIGHT:
                 $x = $dstW - $srcW - $padding;
                 $y = $padding;
                 break;
-            case self::POSITION_BOTTOM_LEFT:
+            case self::POS_BOTTOM_LEFT:
                 $x = $padding;
                 $y = $dstH - $srcH - $padding;
                 break;
-            case self::POSITION_BOTTOM_CENTER:
+            case self::POS_BOTTOM_CENTER:
                 $x = ($dstW - $srcW) / 2;
                 $y = $dstH - $srcH - $padding;
                 break;
-            case self::POSITION_BOTTOM_RIGHT:
+            case self::POS_BOTTOM_RIGHT:
                 $x = $dstW - $srcW - $padding;
                 $y = $dstH - $srcH - $padding;
                 break;
-            case self::POSITION_CENTER_MIDDLE:
+            case self::POS_CENTER_MIDDLE:
                 $x = ($dstW - $srcW) / 2;
                 $y = ($dstH - $srcH) / 2;
                 break;
-            case self::POSITION_LEFT_MIDDLE:
+            case self::POS_LEFT_MIDDLE:
                 $x = $padding;
                 $y = ($dstH - $srcH) / 2;
                 break;
-            case self::POSITION_RIGHT_MIDDLE:
+            case self::POS_RIGHT_MIDDLE:
                 $x = $dstW - $srcW - $padding;
                 $y = ($dstH - $srcH) / 2;
                 break;

@@ -139,6 +139,22 @@ class CUrl
         return curl_error($this->_ch);
     }
 
+    public function success(callable $callback)
+    {
+        if ($this->getErrno() === CURLE_OK)
+            return call_user_func($callback, $this);
+
+        return $this;
+    }
+
+    public function fail(callable $callback)
+    {
+        if ($this->getErrno() !== CURLE_OK)
+            return call_user_func($callback, $this);
+
+        return $this;
+    }
+
     public function execute($url = null)
     {
         if ($url)
@@ -478,11 +494,10 @@ class CUrl
             list($key, $value) = explode('=', trim($field));
             $key = trim($key);
 
-            if(!in_array( $key, array('domain', 'expires', 'path', 'secure', 'httponly', 'comment')))
+            if(!in_array( $key, ['domain', 'expires', 'path', 'secure', 'httponly', 'comment']))
                 $data[$key] = $value;
         }
 
         return $data;
     }
-
 }

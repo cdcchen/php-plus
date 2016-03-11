@@ -28,7 +28,7 @@ class MultiCUrl
             curl_multi_setopt($this->_mh, $options, $value);
         elseif (is_array($options))
             foreach ($options as $option => $value)
-                $this->setOption($this->_mh, $option, $value);
+                $this->setOption($option, $value);
         else
             throw new \InvalidArgumentException('$option type must be int or array');
 
@@ -108,5 +108,4 @@ class MultiCUrl
     {
         return curl_multi_strerror($errno);
     }
-
 }

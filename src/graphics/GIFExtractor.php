@@ -26,7 +26,7 @@ class GIFExtractor
     /**
      * @var array
      */
-    private $_ramesf;
+    private $_frames;
     
     /**
      * @var array
@@ -203,11 +203,12 @@ class GIFExtractor
         
         while (!$this->checkByte(0x3b) && !$this->checkEOF()) {
             
-            $this->getCommentData(1);
+            $this->getCommentData();
             $this->parseGraphicsExtension(2);
             $this->getFrameString(2);
             $this->getApplicationData();
         }
+        $this->closeFile();
     }
     
     /** 

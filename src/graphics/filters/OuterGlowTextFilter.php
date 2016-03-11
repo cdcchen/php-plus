@@ -37,6 +37,7 @@ class OuterGlowTextFilter extends FilterBase
         else {
             if (empty($this->position))
                 $this->position = SimpleImage::POSITION_BOTTOM_RIGHT;
+
             $pos = $this->image->getTextPosition($this->text, $this->font, $this->fontSize, $this->position, $args['padding']);
         }
 
@@ -46,7 +47,9 @@ class OuterGlowTextFilter extends FilterBase
         $outerColor = $args['outerColor'];
         if (empty($outerColor)) $outerColor = [255, 255, 255];
 
-        static::textOuter($this->imageHandle, $this->text, $this->font, $this->fontSize, (int)$pos[0], (int)$pos[1], $textColor, $outerColor, (int)$args['alpha'], (int)$args['angle']);
+        static::textOuter($this->imageHandle,
+            $this->text, $this->font, $this->fontSize,
+            (int)$pos[0], (int)$pos[1], $textColor, $outerColor, (int)$args['alpha'], (int)$args['angle']);
 
         return $this;
     }

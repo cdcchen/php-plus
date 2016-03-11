@@ -17,7 +17,7 @@ namespace phpplus\graphics;
  */
 Class GIFCreator
 {
-    const VERSION = 'GIFCreator V1.0.0';	// Creator version
+    const VERSION = '1.0.0';
     const FRAMES_MODE_FILE = 'file';
     const FRAMES_MODE_BINARY = 'bin';
 
@@ -26,7 +26,7 @@ Class GIFCreator
     protected $buffer = [];
     protected $loop =  0;
     protected $disposal =  2;
-    protected $color = -1;
+    protected $color = 0;
     protected $_img = -1;
 
     protected $errors = [
@@ -36,12 +36,16 @@ Class GIFCreator
 		'ERR03' => 'Does not make animation from animated GIF source',
     ];
 
+    private $_images = [];
+    private $_delays = [];
+    private $_mode = self::FRAMES_MODE_FILE;
+
     /**
      * @return string
      */
-    public function getGIF ()
+    public function getGIF()
     {
-        return ($this->_gif);
+        return $this->_gif;
     }
 
     public function __toString()
@@ -49,57 +53,92 @@ Class GIFCreator
         return $this->_gif;
     }
 
+
+	public function __construct(array $images, array $delays, $mode = self::FRAMES_MODE_FILE)
+    {
+        $this->setImages($images, $delays, $mode)
+            ->buildImagesBuffer();
+	}
+
+    public function create()
+    {
+        static::addHeader();
+
+        for ($i = 0; $i < count($this->buffer); $i++)
+            static::addFrame($i, $this->_delays[$i]);
+
+        static::addFooter();
+    }
+
     /**
      * @param array $images image frames array
      * @param array $delays image delay array
-     * @param int $loop loop count, 0 is always loop
-     * @param int $disposal
-     * @param int $red
-     * @param int $green
-     * @param int $blue
      * @param string $mode images frames data model, file or bin
+     * @return $this
      * @throws \Exception
      */
-	public function __construct(array $images, array $delays, $mode = self::FRAMES_MODE_FILE, $loop = 0, $disposal = 2, $red = 0, $green = 0, $blue = 0)
+    public function setImages(array $images, array $delays, $mode = self::FRAMES_MODE_FILE)
     {
-		if (!is_array($images) && !is_array($delays))
+        if (!is_array($images) && !is_array($delays))
             throw new \Exception(self::VERSION . ': ' . $this->errors['ERR00']);
 
-		$this->loop = ($loop > -1) ? $loop : 0;
-		$this->disposal = ($disposal > -1) ? (($disposal < 3) ? $disposal : 3) : 2;
-		$this->color = ($red > -1 && $green > -1 && $blue > -1) ? ($red | ($green << 8) | ($blue << 16)) : -1;
+        $this->_images = $images;
+        $this->_delays = $delays;
+        $this->_mode = $mode;
 
-		for ($i = 0; $i < count($images); $i++) {
-			if (strtolower($mode) === self::FRAMES_MODE_FILE)
-				$this->buffer[] = file_get_contents($images[$i]);
-			elseif (strtolower($mode) === self::FRAMES_MODE_BINARY)
-				$this->buffer[] = $images[$i];
-			else
-                throw new \Exception(sprintf('%s: %s (%s)!', self::VERSION, $this->errors['ERR02'], $mode));
+        return $this;
+    }
 
-			if (substr($this->buffer[$i], 0, 6) !== 'GIF87a' && substr($this->buffer[$i], 0, 6) !== 'GIF89a')
+
+    public function setLoop($n)
+    {
+        $this->loop = ($n > 0) ? $n : 0;
+        return $this->loop;
+    }
+
+    public function setDisposal($n)
+    {
+        $this->disposal = ($n > -1) ? (($n < 3) ? $n : 3) : 2;
+        return $this;
+    }
+
+    public function setColor($red, $green, $blue)
+    {
+        $this->color = ($red > -1 && $green > -1 && $blue > -1) ? ($red | ($green << 8) | ($blue << 16)) : -1;
+        return $this;
+    }
+
+
+    protected function buildImagesBuffer()
+    {
+        for ($i = 0; $i < count($this->_images); $i++) {
+            if (strtolower($this->_mode) === self::FRAMES_MODE_FILE)
+                $this->buffer[] = file_get_contents($this->_images[$i]);
+            elseif (strtolower($this->_mode) === self::FRAMES_MODE_BINARY)
+                $this->buffer[] = $this->_images[$i];
+            else
+                throw new \Exception(sprintf('%s: %s (%s)!', self::VERSION, $this->errors['ERR02'], $this->_mode));
+
+            if (substr($this->buffer[$i], 0, 6) !== 'GIF87a' && substr($this->buffer[$i], 0, 6) !== 'GIF89a')
                 throw new \Exception(sprintf('%s: %d %s', self::VERSION, $i, $this->errors['ERR01']));
 
-			for ($j = (13 + 3 * (2 << (ord($this->buffer[$i][10]) & 0x07))), $k = true; $k; $j++) {
-				switch ($this->buffer[$i][$j]) {
-					case '!':
-						if ((substr($this->buffer[$i], ($j + 3), 8)) === 'NETSCAPE')
+            for ($j = (13 + 3 * (2 << (ord($this->buffer[$i][10]) & 0x07))), $k = true; $k; $j++) {
+                switch ($this->buffer[$i][$j]) {
+                    case '!':
+                        if ((substr($this->buffer[$i], ($j + 3), 8)) === 'NETSCAPE')
                             throw new \Exception(sprintf('%s: %s (%s source)!', self::VERSION, $this->errors['ERR03'], ($i + 1)));
-						break;
-					case ';':
-						$k = false;
-						break;
-				}
-			}
-		}
+                        break;
+                    case ';':
+                        $k = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
-		static::addHeader();
-
-        for ($i = 0; $i < count($this->buffer); $i++)
-			static::addFrames($i, $delays[$i]);
-
-        static::addFooter();
-	}
+        return $this;
+    }
 
 
     protected function addHeader()
@@ -111,13 +150,15 @@ Class GIFCreator
 			$this->_gif .= substr($this->buffer[0], 13, $cMap);
 			$this->_gif .= "!\377\13NETSCAPE2.0\3\1" . static::getGIFWord($this->loop) . "\0";
 		}
+
+		return $this;
 	}
 
     /**
      * @param int $i
      * @param int $delay
      */
-    protected function addFrames($i, $delay)
+    protected function addFrame($i, $delay)
     {
 		$localsStr = 13 + 3 * (2 << (ord($this->buffer[$i][10]) & 0x07));
 
@@ -141,7 +182,8 @@ Class GIFCreator
 						ord($localsRGB[3 * $j + 0]) == (($this->color >> 16) & 0xFF) &&
 						ord($localsRGB[3 * $j + 1]) == (($this->color >>  8) & 0xFF) &&
 						ord($localsRGB[3 * $j + 2]) == (($this->color >>  0) & 0xFF)
-					) {
+					)
+                {
 					$localsExt = "!\xF9\x04" . chr(($this->disposal << 2) + 1) .
 									chr(($delay >> 0) & 0xFF) . chr(($delay >> 8) & 0xFF) . chr($j) . "\0";
 					break;
@@ -200,7 +242,7 @@ Class GIFCreator
      * @param array $globalBlock
      * @param array $localBlock
      * @param int $len
-     * @return int
+     * @return bool
      */
     protected function blockCompare ($globalBlock, $localBlock, $len)
     {
@@ -209,11 +251,11 @@ Class GIFCreator
 				$globalBlock[3 * $i + 1] != $localBlock[3 * $i + 1] ||
 				$globalBlock[3 * $i + 2] != $localBlock[3 * $i + 2])
             {
-                return 0;
+                return false;
 			}
 		}
 
-		return 1;
+		return true;
 	}
 
     /**
@@ -225,4 +267,3 @@ Class GIFCreator
 		return (chr($int & 0xFF) . chr(($int >> 8) & 0xFF));
 	}
 }
-?>

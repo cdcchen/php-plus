@@ -189,10 +189,7 @@ class SimpleWrapper
     {
         $options = stream_context_get_options($this->_context);
         if ($wrapper)
-            if ($option)
-                return $options[$wrapper][$option];
-            else
-                return $options[$wrapper];
+            return $option ? $options[$wrapper][$option] : $options[$wrapper];
         else
             return $options;
     }
