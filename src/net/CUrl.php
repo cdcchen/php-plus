@@ -139,20 +139,9 @@ class CUrl
         return curl_error($this->_ch);
     }
 
-    public function success(callable $callback)
+    public function hasError()
     {
-        if ($this->getErrno() === CURLE_OK)
-            return call_user_func($callback, $this);
-
-        return $this;
-    }
-
-    public function fail(callable $callback)
-    {
-        if ($this->getErrno() !== CURLE_OK)
-            return call_user_func($callback, $this);
-
-        return $this;
+        return $this->getErrno() !== CURLE_OK;
     }
 
     public function execute($url = null)
