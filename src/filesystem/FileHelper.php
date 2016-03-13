@@ -11,12 +11,6 @@ namespace phpplus\filesystem;
 
 class FileHelper
 {
-
-    /**
-     * @var string the path (or alias) of a PHP file containing MIME type information.
-     */
-    public static $mimeMagicFile = __DIR__ . DIRECTORY_SEPARATOR . 'mimeTypes.php';
-
     private static $_mimeTypes = [];
 
     /**
@@ -85,7 +79,7 @@ class FileHelper
     protected static function loadMimeTypes($magicFile)
     {
         if ($magicFile === null)
-            $magicFile = static::$mimeMagicFile;
+            $magicFile = __DIR__ . DIRECTORY_SEPARATOR . 'mimeTypes.php';
 
         if (!isset(self::$_mimeTypes[$magicFile]))
             self::$_mimeTypes[$magicFile] = require($magicFile);
