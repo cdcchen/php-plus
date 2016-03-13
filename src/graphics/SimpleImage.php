@@ -9,6 +9,7 @@
  */
 
 namespace phpplus\graphics;
+use phpplus\net\UrlHelper;
 
 /**
  * Class SimpleGD
@@ -106,7 +107,7 @@ class SimpleImage
      */
     public static function createImage($data)
     {
-        if (@file_exists($data) && @is_readable($data)) {
+        if (is_file($data) || UrlHelper::isUrl($data)) {
             $image = static::loadFile($data);
         }
         else
@@ -141,12 +142,12 @@ class SimpleImage
 
     public function setFontPath($path)
     {
-        if (@file_exists($path) && @is_readable($path)) {
+        if (is_dir($path) && is_readable($path)) {
             $this->fontPath = $path;
             return $this;
         }
         else
-            throw new ImageException('font path is not exist or unreadable.');
+            throw new ImageException('Font path is not dir or unreadable.');
     }
 
     public function setImageHandle($im)
@@ -874,8 +875,12 @@ class SimpleImage
         if (is_array($position))
             return $position;
         
-        if (@file_exists($font) && @is_readable($font))
+        if (is_file($font)) {
+            if (!is_readable($font))
+                throw new \Exception('Font file is unreadable.');
+
             $points = imagettfbbox($size, $angle, $font, $text);
+        }
         else {
             $width = strlen($text) * 9;
             $height = 16;
@@ -1139,7 +1144,7 @@ class SimpleImage
 
     public static function isAnimatedGif($file)
     {
-        if (@file_exists($file) && is_readable($file)) {
+        if (is_file($file) || UrlHelper::isUrl($file)) {
             $fp = fopen($file, 'rb');
             $data = fread($fp, 1024);
             fclose($fp);
@@ -1153,13 +1158,12 @@ class SimpleImage
 
     public static function getImageInfo($file)
     {
-        $info = null;
-        if (@file_exists($file) && @is_readable($file))
-            $info = getimagesize($file);
+        if (is_file($file) || UrlHelper::isUrl($file))
+            return getimagesize($file);
         elseif (function_exists('getimagesizefromstring'))
-            $info = getimagesizefromstring($file);
+            return getimagesizefromstring($file);
 
-        return $info;
+        return false;
     }
 
     public static function getImageSize($file)
@@ -1193,10 +1197,12 @@ class SimpleImage
 
     public static function framesCount($data)
     {
-        if (@file_exists($data) && @is_readable($data))
+        if (is_file($data) || UrlHelper::isUrl($data)) {
             $data = file_get_contents($data);
+            return substr_count($data, "\x00\x21\xF9\x04");
+        }
 
-        return substr_count($data, "\x00\x21\xF9\x04");
+        return false;
     }
 
     /**
